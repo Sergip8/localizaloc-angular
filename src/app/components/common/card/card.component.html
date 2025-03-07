@@ -1,0 +1,184 @@
+<div class=" ">
+  <div class="relative mx-auto w-full overflow-hidden">
+    <div>
+     
+    </div>
+   
+    <a
+    [routerLink]="['/details', data._id]"
+      class="relative inline-block w-full transform transition-transform duration-300 ease-in-out hover:-translate-y-2 "
+    >
+      <div class="rounded-lg bg-white p-4 shadow">
+        <div
+          class="relative flex w-full h-auto justify-center overflow-hidden rounded-lg"
+        >
+          <div
+         
+            class="w-full"
+          >
+          <div class="">
+              <div class="relative inset-0  bg-opacity-80 flex justify-center items-center">
+                <img [src]="data.image" appDefaultImage="../../../../assets/img/default_image.jpg" alt="" class="h-[180px] object-contain" />
+                <a [href]="data.link" (click)="$event.stopPropagation()" target="_blank" class="bg-opacity-80 bg-slate-50 absolute z-10 w-fit left-0 bottom-0 px-2 rounded-sm inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"> 
+                  <div class="">Ir a {{data.from}}</div>
+                  <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+                </a>
+
+              </div>
+            
+          </div>
+          </div>
+          <div class="absolute bottom-0 left-5 mb-3 flex">
+          </div>
+          <div class="absolute bottom-0 right-5 mb-3 flex">
+            <p class="flex items-center font-medium text-gray-800">
+              <i class="fa fa-heart mr-2 text-2xl text-white"></i>
+            </p>
+          </div>
+          <span
+            class="absolute top-0 left-0 z-10 mt-3 ml-3 inline-flex select-none rounded-lg bg-transparent px-3 py-2 text-lg font-medium text-white"
+          >
+            <i class="fa fa-star"></i>
+          </span>
+        </div>
+<div class="py-1 mt-2">
+
+  <div >
+    <h2
+      class="line-clamp-1 text-lg font-medium text-gray-800 md:text-base"
+    >
+      {{data.location.barrio}}
+    </h2>
+    @if (data.costs?.sale_amount) {
+      <p
+      class="text-primary mt-2  inline-block whitespace-nowrap rounded-xl font-semibold leading-tight"
+    >
+      <span class="text-sm font-light">venta</span>
+      <span class="text-sm uppercase"> COP </span>
+      <span class="sm:text-sm md:text-lg lg:text-xl"
+        >{{data.costs?.sale_amount | currency: '$ ':'symbol' :
+        '1.0-0'}}</span
+      >
+    </p>
+    }
+    <p
+      class="text-primary mt-2  inline-block whitespace-nowrap rounded-xl font-semibold leading-tight"
+    >
+    @if (data.costs?.sale_amount) {
+      <span class="text-sm font-light">arriendo</span>
+    }
+      <span class="text-sm uppercase"> COP </span>
+      <span class="sm:text-sm md:text-lg lg:text-xl"
+        >{{data.costs.total_amount | currency: '$ ':'symbol' :
+        '1.0-0'}}</span
+      >
+    </p>
+  </div>
+  <div class="">
+    <p class="line-clamp-2 mt-2 text-sm text-gray-500 text-gray-800">
+      {{data.description}}
+    </p>
+  </div>
+  <div class="justify-center">
+    <div class="mt-2 flex space-x-3 overflow-hidden rounded-lg px-1 py-1">
+      <p class="flex items-center font-medium text-gray-800">
+        <svg
+          fill="#000000"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-7"
+        >
+          <path
+            id="secondary"
+            d="M10,5h4a1,1,0,0,1,1,1V22a1,1,0,0,1-1,1H9a0,0,0,0,1,0,0V6a1,1,0,0,1,1-1Z"
+            transform="translate(26 2) rotate(90)"
+            style="fill: rgb(44, 169, 188); stroke-width: 2;"
+          ></path>
+          <path
+            id="primary"
+            d="M7,11H3V7A2,2,0,0,1,5,5H5A2,2,0,0,1,7,7ZM5,17v2m14-2v2m2-3V12a1,1,0,0,0-1-1H3v5a1,1,0,0,0,1,1H20A1,1,0,0,0,21,16Z"
+            style="
+              fill: none;
+              stroke: rgb(0, 0, 0);
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 2;
+            "
+          ></path>
+        </svg>
+        {{data.technicalSheet.bedrooms || 1}}
+      </p>
+
+      <p class="flex items-center font-medium text-gray-800">
+        <svg
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-7"
+        >
+          <path
+            id="secondary"
+            d="M19,10H13V9a3,3,0,0,1,3-3h0a3,3,0,0,1,3,3Z"
+            style="fill: rgb(44, 169, 188); stroke-width: 2;"
+          ></path>
+          <path
+            id="primary"
+            d="M16,6V5a2,2,0,0,0-2-2H9A2,2,0,0,0,7,5V21"
+            style="
+              fill: none;
+              stroke: rgb(0, 0, 0);
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 2;
+            "
+          ></path>
+          <path
+            id="primary-2"
+            data-name="primary"
+            d="M19,10H13V9a3,3,0,0,1,3-3h0a3,3,0,0,1,3,3ZM5,21H9m9-5V14m-4,2V14"
+            style="
+              fill: none;
+              stroke: rgb(0, 0, 0);
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 2;
+            "
+          ></path>
+        </svg>
+        {{data.technicalSheet.bathrooms}}
+      </p>
+      <p class="flex items-center font-medium text-gray-800">
+        <svg
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-7"
+        >
+          <path
+            id="secondary"
+            d="M17,5H7l4,4V19H21V9.41a1,1,0,0,0-.29-.7Z"
+            style="fill: rgb(44, 169, 188); stroke-width: 2;"
+          ></path>
+          <path
+            id="primary"
+            d="M20.71,8.71a1,1,0,0,1,.29.7V19H11V9L7,5H17ZM11,19V9L7,5,3.29,8.71a1,1,0,0,0-.29.7V19Z"
+            style="
+              fill: none;
+              stroke: rgb(0, 0, 0);
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 2;
+            "
+          ></path>
+        </svg>
+
+        {{data.area}} m <sup>2</sup>
+      </p>
+    </div>
+  </div>
+</div>
+      </div>
+    </a>
+  
+  </div>
+</div>

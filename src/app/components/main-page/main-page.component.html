@@ -1,0 +1,74 @@
+
+    <!-- ========== navbar start ================= -->
+     <div class="">
+         <nav class="container mx-auto bg-primarybg py-[20px] md:py-[20px]">
+           <div class="container flex mx-auto px-[10px] md:px-0">
+             <div class="w-[50%]">
+                 <img src="logo.png" alt="" srcset="" class="w-[82px] h-auto"/>            
+             </div>
+             <div class="w-[50%] flex justify-end items-center">
+                 <ul class="md:flex md:justify-between w-full hidden">
+                     <li class=" flex"><a href="" class="text-blue relative after:absolute after:content-[''] after:bg-clifford after:left-[50%]  after:w-[0px] after:h-[3px] after:bottom-[-3px] after:translate-x-[-50%] hover:after:w-[25px] after:duration-[300ms] hover:font-bold duration-[300ms]">Home</a></li>
+                      <li class=" flex justify-end"><a href="" class="text-blue relative after:absolute after:content-[''] after:bg-clifford after:left-[50%]  after:w-[0px] after:h-[3px] after:bottom-[-3px] after:translate-x-[-50%] hover:after:w-[25px] after:duration-[300ms] hover:font-bold duration-[300ms]">About</a></li>
+                       <li class=" group relative flex"><a href="" class="text-blue relative after:absolute after:content-[''] after:bg-clifford after:left-[50%]  after:w-[0px] after:h-[3px] after:bottom-[-3px] after:translate-x-[-50%] hover:after:w-[25px] after:duration-[300ms] hover:font-bold duration-[300ms] group">Properties <i class="fa-solid fa-angle-down group-hover:rotate-180 duration-[300ms]"></i></a>
+                       <ul class="absolute w-[150px] border-blue-50 bottom-[-140px] text-center left-[30px]  bg-white hidden group-hover:block  duration-[300ms] shadow-lg shadow-blue-500/50 rounded-xl overflow-hidden">
+                       <li class="py-[5px] border-b-[1px] border-blue duration-[300ms] hover:bg-primarybg"><a href="">Plot</a></li>
+                       <li class="py-[5px] border-b-[1px] border-blue duration-[300ms] hover:bg-primarybg"><a href="">Flat</a></li>
+                       <li class="py-[5px] border-b-[1px] border-blue duration-[300ms] hover:bg-primarybg"><a href="">Rent</a></li>
+                       <li class="py-[5px] duration-[300ms] hover:bg-primarybg"><a href="">Space</a></li>
+                       </ul>
+                       </li>
+                        <li class=" flex"><a href="" class="text-blue relative after:absolute after:content-[''] after:bg-clifford after:left-[50%]  after:w-[0px] after:h-[3px] after:bottom-[-3px] after:translate-x-[-50%] hover:after:w-[25px] after:duration-[300ms] hover:font-bold duration-[300ms]">Contact</a></li>
+                 </ul>
+                 <i class="fa-solid fa-bars md:hidden block text-blue font-bold text-[20px]"></i>
+             </div>
+           </div>
+         </nav>
+         <section class="bg-[url('/assets/img/re_main.jpg')] pb-[40px] h-[450px] pt-[100px] flex justify-center w-full"> 
+           <div class="md:px-0 px-[10px]">
+             <div class="w-fit px-4 py-3 bg-opacity-50 bg-orange-100 rounded-xl text-center">
+                 <h3 class="text-[18px] md:text-[25px] mb-3 font-semibold">Encuentra el inmueble que buscas</h3>
+                 <div class=" bg">
+                     
+                    <button [ngClass]="{'bg-slate-400 text-slate-100': operation == 'arriendo', 'bg-slate-50': operation != 'arriendo'}" (click)="rent()" class="px-4 py-2 w-24 text-sm font-medium text-gray-900  border border-gray-200 rounded-s-lg  dark:bg-gray-800 dark:border-gray-700 dark:text-white ">
+                      Arriendo
+                    </button>
+                    <button [ngClass]="{'bg-slate-400 text-slate-100': operation == 'venta', 'bg-slate-50': operation != 'venta'}" (click)="sold()" class="px-4 py-2 w-24 text-sm font-medium text-gray-900 border border-gray-200 rounded-e-lg    dark:bg-gray-800 dark:border-gray-700 dark:text-white  ">
+                      Venta
+                    </button>   
+                </div>
+                <div class=" py-[7px] md:py-[12px] ">
+                 <div class="flex justify-center items-center ">
+                     <div class="p-4 text-gray-600 dark:text-gray-300 outline-none focus:outline-none">
+                         <div class="relative flex h-fit gap-5">
+                             <app-selectcheck [data]="type" (selectedMulti)="typeStr = $event"></app-selectcheck>
+                            <app-search (gotoResults)="gotoResults($event)"></app-search>
+                         </div>
+                     </div>
+                 </div>
+                </div>
+             
+             </div>
+             <!-- <div class="w-full md:w-[35%]">
+               <picture>
+                 <img src="bannerhouse.png" alt="" class="w-full h-auto">
+               </picture>
+             </div> -->
+           </div>
+         </section>
+         <section class="py-[20px] md:py-[35px]"> 
+           <div class="container mx-auto md:px-0 px-[10px]">
+              <h2 class="text-[20px] md:text-h2 font-semibold text-center md:text-left w-full md:w-[500px]">Destacados Bogotá</h2>
+              <div class="md:pt-[50px] pt-[20px] md:flex justify-between">
+                @if (suggested) {                
+                 @for (item of suggested; track $index) {
+                   <app-card-main class="w-full md:w-[28%] p-[15px] relative  rounded-xl duration-[500ms] border border-transparent  hover:border hover:border-ashborder group hover:shadow-md" [suggested]="item"></app-card-main> 
+                 }
+                }
+           </div>     
+             </div>
+         </section>
+         <section>
+           <!-- <app-footer></app-footer> -->
+         </section>
+     </div>     

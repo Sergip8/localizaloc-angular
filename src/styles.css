@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.leaflet-popup-content-wrapper h2{
+    
+    font-size: 1em;
+    font-weight: 600;
+    
+    }
+    .leaflet-popup-content-wrapper .price{
+        font-size: 1em;
+    font-weight: 600;
+    }
+/* .leaflet-popup-content-wrapper div{
+
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    
+    } */
+    /* .drag-scroll-content{
+        display: flex !important
+    } */
