@@ -6,7 +6,6 @@ import { MapComponent } from "../shared/map/map.component";
 import { CurrencyPipe, NgFor } from '@angular/common';
 import { CardComponent } from '../common/card/card.component';
 import { NearbyLocations } from '../../models/nearbyLocations';
-import { ChartConfiguration } from 'chart.js';
 
 @Component({
     selector: 'app-details-page',

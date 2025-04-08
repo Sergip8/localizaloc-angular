@@ -25,7 +25,6 @@
     "@types/leaflet.markercluster": "^1.5.4",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
-    "ng2-charts": "^8.0.0",
     "ngx-drag-scroll": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

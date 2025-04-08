@@ -15,7 +15,8 @@ import { Filter } from '../../models/filter';
 
 @Component({
     selector: 'app-main-page',
-    imports: [ SelectCheckComponent, NgClass, FormsModule, CardMainComponent, SearchComponent, PromptComponent],
+    standalone: true,
+    imports: [ SelectCheckComponent, NgClass, FormsModule, CardMainComponent, SearchComponent, PromptComponent ],
     templateUrl: './main-page.component.html',
     styleUrl: './main-page.component.css'
 })
