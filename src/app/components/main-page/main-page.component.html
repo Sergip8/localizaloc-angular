@@ -1,6 +1,6 @@
 
     <!-- ========== navbar start ================= -->
-     <div class="">
+     <div class=" ">
          <nav class="container mx-auto bg-primarybg py-[20px] md:py-[20px]">
            <div class="container flex mx-auto px-[10px] md:px-0">
              <div class="w-[50%]">
@@ -41,7 +41,7 @@
                  <div class="flex justify-center items-center ">
                      <div class="p-4 text-gray-600 dark:text-gray-300 outline-none focus:outline-none">
                          <div class="relative flex h-fit gap-5">
-                             <app-selectcheck [data]="type" (selectedMulti)="typeStr = $event"></app-selectcheck>
+                             <app-selectcheck [setValue]="['Local']" [data]="type" (selectedMulti)="typeStr = $event"></app-selectcheck>
                             <app-search (gotoResults)="gotoResults($event)"></app-search>
                          </div>
                      </div>
@@ -55,6 +55,9 @@
                </picture>
              </div> -->
            </div>
+         </section>
+         <section class="w-full mt-20">
+          <app-prompt-form [loading]="loading" (executePrmpt)="executePrompt($event)"></app-prompt-form>
          </section>
          <section class="py-[20px] md:py-[35px]"> 
            <div class="container mx-auto md:px-0 px-[10px]">

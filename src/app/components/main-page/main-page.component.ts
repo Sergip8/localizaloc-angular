@@ -6,49 +6,50 @@ import { SelectData } from '../common/select/selectModel';
 import { NgClass, NgFor } from '@angular/common';
 import { CosmosdbService } from '../../services/cosmosdb.service';
 import { FormsModule, NgModel } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { MapComponent } from "../shared/map/map.component";
 import { CardMainComponent } from "./card-main.component";
 import { SearchComponent } from "../common/form-range/form-search.component";
+import { PromptComponent } from '../common/form-range/form-prompt';
+import { Filter } from '../../models/filter';
 
 @Component({
-  selector: 'app-main-page',
-  standalone: true,
-  imports: [SelectComponent, FooterComponent, SelectCheckComponent, NgClass, FormsModule, NgFor, MapComponent, CardMainComponent, SearchComponent],
-  templateUrl: './main-page.component.html',
-  styleUrl: './main-page.component.css'
+    selector: 'app-main-page',
+    imports: [ SelectCheckComponent, NgClass, FormsModule, CardMainComponent, SearchComponent, PromptComponent],
+    templateUrl: './main-page.component.html',
+    styleUrl: './main-page.component.css'
 })
 export class MainPageComponent implements OnInit{
+executePrompt(prompt: string) {
+  this.getPropertyType(prompt)
+}
+filter: Filter
 showMap = false;
-gotoResults(loc) {
+gotoResults(loc: any) {
   const type = this.typeStr.join("-").toLowerCase()
-  const location = loc
-  let paramType: "type"|"location" = "type"
+  const location = loc.url_frag
   const navigationParams =[this.operation]
   if (type != ""){
     navigationParams.push(type)
-    paramType = "type"
   }
-  if (location != ""){
-    navigationParams.push(location.replace("/", "_"))
-    paramType = "location"
-  }
-  if (location != "" || type != ""){
-    console.log(navigationParams)
-    this.router.navigate(navigationParams, { state: { paramType: paramType } });
+  if (loc != ""){
+    this.router.navigate(navigationParams, { queryParams: { location: loc } })
   }
   else
   this.router.navigate(navigationParams)
+  
 }
-
-  typeStr = []
+  typeStr = ["Local"]
   
   isDropdownOpen = false;
   cities: any
   barrio: any
   suggested:any[] = []
+  loading = false
 
-constructor(private cosmosService: CosmosdbService, private router: Router){}
+constructor(private cosmosService: CosmosdbService, private router: Router){
+  
+}
   ngOnInit(): void {
     this.getSuggested()
   }
@@ -85,5 +86,24 @@ rent() {
       error: e => console.log(e)
     })
   }
+  getPropertyType(prompt: string){
+    this.loading = true
+    this.cosmosService.getPromptResults(prompt).subscribe({
+      next: data => {
+        console.log(data)
+        this.filter = data.filter
+        console.log(this.filter)
+        const type_route = this.filter.type.join("-").toLowerCase()
+        let navigationExtras: NavigationExtras = {
+          state: {
+            filter: this.filter
+          }
+        };
+        this.router.navigate([this.filter.operation, type_route], navigationExtras)
+      },
+      error: e => console.log(e),
+      complete: () => this.loading = false
+  })
 
+}
 }

@@ -21,12 +21,10 @@ const iconDefault = icon({
 Marker.prototype.options.icon = iconDefault;
 
 @Component({
-  selector: 'app-map',
-  standalone: true,
-  imports: [NgStyle],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.css',
- 
+    selector: 'app-map',
+    imports: [NgStyle],
+    templateUrl: './map.component.html',
+    styleUrl: './map.component.css'
 })
 export class MapComponent implements AfterViewInit, OnChanges, OnInit {
 

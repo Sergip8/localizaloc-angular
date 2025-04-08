@@ -16,27 +16,39 @@ import { PaginationComponent } from '../../common/pagination/pagination';
 import { FormRangeComponent } from "../../common/form-range/form-range";
 import { SearchComponent } from "../../common/form-range/form-search.component";
 import { Pagination } from '../../../models/pagination';
+import { CheckboxesComponent, Room } from '../../common/form-range/form-range copy';
+import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-filter-bar',
-  standalone: true,
-  imports: [
-    SelectComponent,
-    SelectCheckComponent,
-    CardComponent,
-    NgFor, NgClass,
-    FilterTopbarComponent,
-    ReactiveFormsModule,
-    MapComponent,
-    SpinnerComponent,
-    PaginationComponent,
-    FormRangeComponent,
-    SearchComponent
-],
-  templateUrl: './filter-bar.component.html',
-  styleUrl: './filter-bar.component.css'
+    selector: 'app-filter-bar',
+    imports: [
+        CheckboxesComponent,
+        SelectCheckComponent,
+        CardComponent,
+        NgFor, NgClass,
+        FilterTopbarComponent,
+        ReactiveFormsModule,
+        MapComponent,
+        PaginationComponent,
+        FormRangeComponent,
+        SearchComponent
+    ],
+    templateUrl: './filter-bar.component.html',
+    styleUrl: './filter-bar.component.css'
 })
 export class FilterBarComponent implements OnInit {
+setGarage($event: number[]) {
+ this.filterParams.garajes = $event
+ this.getAllItems()
+}
+setBath($event: number[]) {
+this.filterParams.banos = $event
+this.getAllItems()
+}
+setRoom($event: number[]) {
+  this.filterParams.habitaciones = $event
+  this.getAllItems()
+}
   
   
   currentUrl: string;
@@ -104,6 +116,17 @@ constructor(
   private formBuilder: FormBuilder, 
   private route: ActivatedRoute,
   private location: Location){
+    const filter = this.router.getCurrentNavigation().extras?.state?.["filter"]
+  if (filter){
+    this.filterParams = filter
+    console.log(this.filterParams)
+    if (filter.min && filter.max){
+      this.cost_range = [filter.min, filter.max]
+    }
+    if (filter.areaMin && filter.areaMax){
+      this.area_range = [filter.areaMin, filter.areaMax]
+    }
+  }
     this.currentUrl = this.router.url;
     const navigation = this.router.getCurrentNavigation();
     if(navigation?.extras?.state)
@@ -129,21 +152,22 @@ nextPage() {
 }
 
   ngOnInit(): void {
-   
+    console.log(this.route)
+    this.route.queryParams.subscribe(queryParams => {
+      console.log(queryParams)
+      if (queryParams["location"]){
+        this.filterParams.location = queryParams["location"]
+      }
+    })
     this.route.params.subscribe(params => {
+      console.log(params)
       this.filterParams.operation = params['operation'];
-      if(params['location']){
-        console.log(params['location'])
-        this.filterParams.type= params['type'].split("-") || null;
-        this.filterParams.location = params['location'] || null;
+      if(params['type']){
+      
+        this.filterParams.type= params['type'].split("-") ?? [];
+        
       }
-      else{
-        if(this.paramType == "type")
-          this.filterParams.type= params['type'].split("-") || null;
-
-        if(this.paramType == "location")
-          this.filterParams.location = params['type'] || null;
-      }
+     
     });
     console.log(this.paramType)
     console.log(this.filterParams)
@@ -158,6 +182,18 @@ nextPage() {
   order:string|null = null 
   isList = true
   lastCT = false
+  numberList = [1,2,3,4,5,6]
+    rooms: Room[] = [
+      { value: 1, label: '1', checked: false },
+      { value: 2, label: '2', checked: false },
+      { value: 3, label: '3', checked: false },
+      { value: 4, label: '4', checked: false },
+      { value: 5, label: '5+', checked: false },
+     
+    ];
+  area_range = null
+  cost_range = null
+  
 
 setMultiTagValue($event: string[]) {
   console.log($event)
@@ -176,7 +212,7 @@ typeList = ["Local", "Oficina", "Bodega"]
     type: "multiple",
     search: false,
     showLabel: true,
-    list: [1,2,3,4,5,6],
+    list: this.numberList,
   };
   operation: SelectData = {
     default: "operacion",
@@ -191,6 +227,27 @@ typeList = ["Local", "Oficina", "Bodega"]
     search: true,
     showLabel: true,
     list: barrios_bogota
+  };
+  bedroom: SelectData = {
+    default: "N° de habitaciones",
+    type: "multiple",
+    search: false,
+    showLabel: true,
+    list: this.numberList
+  };
+  bathroom: SelectData = {
+    default: "N° de baños",
+    type: "single",
+    search: false,
+    showLabel: true,
+    list: this.numberList
+  };
+  garage: SelectData = {
+    default: "N° de garajes",
+    type: "single",
+    search: false,
+    showLabel: true,
+    list: this.numberList
   };
   
   pages = [1,2,3]

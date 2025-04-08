@@ -1,16 +1,14 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 
 
 
 @Component({
-    
     selector: 'app-form-range',
-    standalone: true,
-    imports: [ReactiveFormsModule ],
+    imports: [ReactiveFormsModule],
     template: `
      <form class="max-w-sm mx-auto" [formGroup]="formGroup" (submit)="submit()">
-        <label for="min" class="text-sm font-medium text-gray-900 dark:text-white">{{labelStr}}</label>
+        <label for="min" class="text-sm font-medium text-gray-700 dark:text-white">{{labelStr}}</label>
         <div class="flex items-center justify-center w-48">
           <div class="">
             <input placeholder="Desde" inputmode="numeric" type="number" formControlName="min" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
@@ -53,10 +51,9 @@ input::-webkit-inner-spin-button {
 *:focus {
     outline: none;
 }
-    `],
-
-  })
-  export class FormRangeComponent {
+    `]
+})
+  export class FormRangeComponent implements OnInit {
 submit() {
     this.range.emit(this.formGroup.value)
 }
@@ -68,8 +65,18 @@ submit() {
             max: [null, [Validators.required, Validators.pattern("[0-9]+")]],
           });
     }
+  ngOnInit(): void {
+    if (this.rangeValues){
+      this.formGroup.patchValue({
+        min: this.rangeValues[0],
+        max: this.rangeValues[1]
+      })
+    }
+
+  }
     
     @Output() range = new EventEmitter<any>()
     @Input() labelStr: string
+    @Input() rangeValues: number[] = null
 
   }

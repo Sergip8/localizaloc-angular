@@ -5,10 +5,8 @@ import { Pagination } from "../../../models/pagination";
 
 
 @Component({
-    
     selector: 'app-pagination',
-    standalone: true,
-    imports:[NgFor, NgIf],
+    imports: [NgFor, NgIf],
     template: `
    <nav  aria-label="Pagination">
    <div class="flex justify-center items-center gap-2 my-4">
@@ -47,9 +45,8 @@ import { Pagination } from "../../../models/pagination";
     `,
     styles: [`
         
-    `],
-
-  })
+    `]
+})
 export class PaginationComponent implements OnInit, OnChanges {
 
     constructor(){

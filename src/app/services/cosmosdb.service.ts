@@ -4,6 +4,8 @@ import { Filter } from '../models/filter';
 import { NearbyLocations } from '../models/nearbyLocations';
 
 const baseUrl = "https://localizaloc.azurewebsites.net/api"
+const baseUrl1 = "https://localizalocapiai.azurewebsites.net/api"
+
 const headers = { 'Access-Control-Allow-Origin': '*'};
 @Injectable({
   providedIn: 'root'
@@ -44,6 +46,17 @@ export class CosmosdbService {
       params = params.set('order', order);
     }
     return this.http.get<any>(baseUrl+ `/getalllocals`, {headers:headers, params:params})
+  }
+  getBarrios(loc: string){
+    let params = new HttpParams()
+      .set('loc', loc.toString());
+    return this.http.get<any>(baseUrl+ "/getBarrios", {headers:headers, params:params})
+  }
+
+  getPromptResults(prompt: string){
+    let params = new HttpParams()
+      .set('prompt', prompt.toString());
+    return this.http.get<any>(baseUrl1+ "/promptResolver", {headers:headers, params:params})
   }
 
 }

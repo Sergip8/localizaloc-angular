@@ -10,7 +10,7 @@ export const routes: Routes = [
         loadChildren: () => import('./components/main.module').then((m) => m.MainModule)
       },
     {path: "details/:id", component: DetailsPageComponent},
-    {path: ":operation/:type/:location", component: FilterBarComponent},
     {path: ":operation/:type", component: FilterBarComponent},
     {path: ":operation", component: FilterBarComponent},
+ 
 ];

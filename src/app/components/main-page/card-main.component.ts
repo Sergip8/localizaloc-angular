@@ -4,9 +4,7 @@ import { MapComponent } from "../shared/map/map.component";
 
 
 @Component({
-    
     selector: 'app-card-main',
-    standalone: true,
     imports: [NgFor, MapComponent],
     template: `
            <div class="">
@@ -72,9 +70,8 @@ import { MapComponent } from "../shared/map/map.component";
     `,
     styles: [`
         
-    `],
-
-  })
+    `]
+})
   export class CardMainComponent {
 
     

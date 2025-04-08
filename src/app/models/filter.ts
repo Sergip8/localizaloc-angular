@@ -10,6 +10,9 @@ export class Filter {
     localidad: string| null = null
     antiguedad: string[] = []
     estrato: number[] = []
+    habitaciones: number[] = []
+    banos: number[] = []
+    garajes: number[] = []
     order: any = null
     operation: string| null = null
     location: string| null = null

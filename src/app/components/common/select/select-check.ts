@@ -13,17 +13,16 @@ import { FormsModule } from "@angular/forms";
 import { NgClass } from "@angular/common";
 
 @Component({
-  selector: "app-selectcheck",
-  standalone: true,
-  imports: [NgClass],
-  template: `
-    <div [class]="'relative w-48 '+data.default.replaceAll(' ', '') ">
+    selector: "app-selectcheck",
+    imports: [NgClass],
+    template: `
+    <div [class]="'relative  '+data.default.replaceAll(' ', '') ">
       @if (data.showLabel) {
-        <label class=" block mb-2 mt-3 text-sm font-medium text-gray-900 dark:text-white">Seleccione {{data?.default}}</label>
+        <label class=" block mb-2 mt-3 text-sm font-medium text-gray-700 dark:text-white">{{data?.default}}</label>
 
       }
       <button
-        class="max-w-48 w-52 justify-between font-normal text-gray-400 text-sm  dark:text-white bg-white ps-4 pe-1 py-2 inline-flex items-center"
+        class="w-full justify-between font-normal text-gray-400 text-sm  dark:text-white bg-white ps-4 pe-1 py-2 inline-flex items-center"
         (click)="toggleDropdown()"
       >
       @if (data.type == "multiple") {
@@ -80,7 +79,7 @@ import { NgClass } from "@angular/common";
       </div>
     </div>
   `,
-  styles: [``],
+    styles: [``]
 })
 export class SelectCheckComponent implements OnInit {
 isChecked(opt: string|number) {

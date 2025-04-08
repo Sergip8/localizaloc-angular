@@ -1,6 +1,6 @@
 <div class="container mx-auto">
   <div class="flex">
-    <div class="px-4 py-4  h-[100vh] bg-slate-100 flex flex-col items-center">
+    <div class="px-1 py-4 h-[100vh] w-80 bg-slate-100 flex flex-col items-center">
       <button (click)="isList = !isList" type="button" class="w-full justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         {{!isList? 'Lista': 'Mapa'}}
         <svg [ngClass]="{'rotate-180':!isList}" class=" w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -8,13 +8,23 @@
         </svg>
       </button>
       <div class="pt-10 flex flex-col gap-3">
-        <app-search [placeholder]="'ubicacion'"></app-search>
+        <app-search [isFilter]="false" [set_location]="filterParams.location" [placeholder]="'ubicacion'"></app-search>
         <app-selectcheck [data]="operation" [setValue]="filterParams.operation" (selectedSingle)="filterOperation($event)"></app-selectcheck>
         <app-selectcheck [data]="type" (selectedMulti)="filterType($event)" [setValue]="filterParams.type"></app-selectcheck>
-        <app-selectcheck [data]="estrato" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
         <!-- <app-selectcheck [data]="barrio" (selectedMulti)="filterBarrio($event)"></app-selectcheck> -->
-        <app-form-range (range)="filterPrice($event)" [labelStr]="'Precio'"></app-form-range>
-        <app-form-range (range)="filterArea($event)" [labelStr]="'Area'"></app-form-range>
+        <app-form-range [rangeValues]="cost_range" (range)="filterPrice($event)" [labelStr]="'Precio'"></app-form-range>
+        <app-form-range [rangeValues]="area_range" (range)="filterArea($event)" [labelStr]="'Area'"></app-form-range>
+        
+          <app-selectcheck [data]="estrato" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
+          <app-checkboxes [selectedRooms]="filterParams.habitaciones" [title]="'Habitaciones'" (roomChange)="setRoom($event)" ></app-checkboxes>
+          <app-checkboxes [selectedRooms]="filterParams.banos" [title]="'Baños'" (roomChange)="setBath($event)" ></app-checkboxes>
+          <app-checkboxes [selectedRooms]="filterParams.garajes" [title]="'garages'" (roomChange)="setGarage($event)" ></app-checkboxes>
+          <!-- <app-selectcheck [data]="bedroom" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
+       
+        
+          <app-selectcheck [data]="bathroom" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
+          <app-selectcheck [data]="garage" (selectedMulti)="filterEstrato($event)"></app-selectcheck> -->
+        
       </div>
     </div>
     @if (isList) {
