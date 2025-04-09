@@ -7,6 +7,7 @@ import { NgClass } from "@angular/common";
 
 @Component({
   selector: 'app-prompt-form',
+  standalone: true,
   imports: [FormsModule, NgClass],
   template: `
 <div class="relative mx-96">

@@ -9,6 +9,7 @@ import { NearbyLocations } from '../../models/nearbyLocations';
 
 @Component({
     selector: 'app-details-page',
+    standalone: true,
     imports: [DragScrollComponent, DragScrollItemDirective, MapComponent, CurrencyPipe, CardComponent, NgFor],
     templateUrl: './details-page.component.html',
     styleUrl: './details-page.component.css'

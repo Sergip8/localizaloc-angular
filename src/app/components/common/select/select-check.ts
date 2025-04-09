@@ -4,16 +4,14 @@ import {
   HostListener,
   Input,
   OnInit,
-  output,
   Output,
-  SimpleChanges,
 } from "@angular/core";
 import { SelectData } from "./selectModel";
-import { FormsModule } from "@angular/forms";
 import { NgClass } from "@angular/common";
 
 @Component({
     selector: "app-selectcheck",
+    standalone: true,
     imports: [NgClass],
     template: `
     <div [class]="'relative  '+data.default.replaceAll(' ', '') ">

@@ -4,6 +4,7 @@ import { fadeInOut } from '../utils/animations';
 
 @Component({
     selector: 'app-spinner',
+    standalone: true, 
     imports: [CommonModule],
     templateUrl: './spinner.component.html',
     styles: [],

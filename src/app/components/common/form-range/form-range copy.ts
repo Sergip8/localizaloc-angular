@@ -11,6 +11,7 @@ export interface Room {
 
 @Component({
     selector: 'app-checkboxes',
+    standalone: true,
     imports: [ReactiveFormsModule, FormsModule, NgFor, NgClass],
     template: `
 <div>

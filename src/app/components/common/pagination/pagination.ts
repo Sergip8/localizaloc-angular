@@ -6,6 +6,7 @@ import { Pagination } from "../../../models/pagination";
 
 @Component({
     selector: 'app-pagination',
+    standalone: true,
     imports: [NgFor, NgIf],
     template: `
    <nav  aria-label="Pagination">

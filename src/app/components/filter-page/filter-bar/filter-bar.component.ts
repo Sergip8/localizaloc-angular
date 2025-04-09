@@ -21,6 +21,7 @@ import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-filter-bar',
+    standalone: true,
     imports: [
         CheckboxesComponent,
         SelectCheckComponent,
