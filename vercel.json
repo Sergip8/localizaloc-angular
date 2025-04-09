@@ -1,9 +1,6 @@
 {
-  "headers": [
-    {
-      "source": "/assets/(.*).js",
-      "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
-    }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/dist/cbb_locales/browser/index.html" }]
+  "routes": [
+    { "src": "^/dist/cbb_locales/browser/(.*)$", "dest": "/dist/cbb_locales/browser/$1" },
+    { "src": "^/(?!api|_next|static|.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot)$)(.*)$", "dest": "/dist/cbb_locales/browser/index.html" }
+  ]
 }
