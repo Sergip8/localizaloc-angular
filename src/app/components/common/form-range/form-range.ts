@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angula
 
 @Component({
     selector: 'app-form-range',
-    standalone: true,
     imports: [ReactiveFormsModule],
     template: `
      <form class="max-w-sm mx-auto" [formGroup]="formGroup" (submit)="submit()">

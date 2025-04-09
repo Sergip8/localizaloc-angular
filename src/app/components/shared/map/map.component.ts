@@ -22,7 +22,6 @@ Marker.prototype.options.icon = iconDefault;
 
 @Component({
     selector: 'app-map',
-    standalone: true,
     imports: [NgStyle],
     templateUrl: './map.component.html',
     styleUrl: './map.component.css'

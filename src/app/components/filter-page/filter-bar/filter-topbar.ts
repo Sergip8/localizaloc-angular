@@ -6,7 +6,6 @@ import { SelectCheckComponent } from "../../common/select/select-check";
 
 @Component({
     selector: 'app-filter-topbar',
-    standalone: true, 
     template: `
     
     <nav class="w-full flex items-center justify-between flex-wrap bg-slate-100 px-6 py-4">

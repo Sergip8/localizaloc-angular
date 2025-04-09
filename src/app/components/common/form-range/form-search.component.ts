@@ -7,7 +7,6 @@ import { NgClass, NgFor, NgIf } from "@angular/common";
 
 @Component({
     selector: 'app-search',
-    standalone: true,
     imports: [FormsModule, NgClass, NgFor, NgIf, NgClass],
     template: `
     <div class="relative">

@@ -11,7 +11,6 @@ import { NgClass } from "@angular/common";
 
 @Component({
     selector: "app-selectcheck",
-    standalone: true,
     imports: [NgClass],
     template: `
     <div [class]="'relative  '+data.default.replaceAll(' ', '') ">

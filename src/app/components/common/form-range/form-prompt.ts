@@ -6,10 +6,9 @@ import { NgClass } from "@angular/common";
 
 
 @Component({
-  selector: 'app-prompt-form',
-  standalone: true,
-  imports: [FormsModule, NgClass],
-  template: `
+    selector: 'app-prompt-form',
+    imports: [FormsModule, NgClass],
+    template: `
 <div class="relative mx-96">
     <label for="aiPromt" for="aiPromt" class="sr-only">ai prompt</label>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true" class="absolute left-3 top-1/2 size-4 -translate-y-1/2 fill-primary dark:fill-primary-dark">
@@ -59,7 +58,7 @@ import { NgClass } from "@angular/common";
 </button>
 </div>
     `,
-  styles: [`    
+    styles: [`    
     `]
 })
 export class PromptComponent {
