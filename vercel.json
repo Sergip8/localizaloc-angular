@@ -1,7 +1,7 @@
 {
   "routes": [
-    { "src": "^/dist/cbb_locales/browser/assets/(.*)$", "dest": "/dist/cbb_locales/browser/assets/$1" },
+    { "src": "^/assets/(.*)$", "dest": "/dist/cbb_locales/browser/assets/$1" },
     { "src": "^/dist/cbb_locales/browser/(.*)$", "dest": "/dist/cbb_locales/browser/$1" },
-    { "src": "^/(?!api|_next|static|.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|json)$)(.*)$", "dest": "/dist/cbb_locales/browser/index.html" }
+    { "src": "^/(?!api|_next|static|.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|json|jeojson)$)(.*)$", "dest": "/dist/cbb_locales/browser/index.html" }
   ]
 }
