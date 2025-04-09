@@ -1,5 +1,5 @@
 {
     "routes": [
-      { "src": "/(.*)", "dest": "/index.html" }
+      { "src": "/(.*)", "dest": "/dist/cbb_locales/browser/index.html" }
     ]
   }
