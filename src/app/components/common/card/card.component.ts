@@ -6,7 +6,7 @@ import { DefaultImageDirective } from '../../directives/default-image.directive'
 
 @Component({
     selector: 'app-card',
-    imports: [CurrencyPipe, RouterLink, MapComponent, DefaultImageDirective, PercentPipe],
+    imports: [CurrencyPipe, RouterLink, DefaultImageDirective, PercentPipe],
     templateUrl: './card.component.html',
     styleUrl: './card.component.css'
 })

@@ -1,84 +1,240 @@
-<div class="container mx-auto">
-  <div class="flex">
-    <div class="px-1 py-4 h-[100vh] w-80 bg-slate-100 flex flex-col items-center">
-      <button (click)="isList = !isList" type="button" class="w-full justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        {{!isList? 'Lista': 'Mapa'}}
-        <svg [ngClass]="{'rotate-180':!isList}" class=" w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-        </svg>
-      </button>
-      <div class="pt-10 flex flex-col gap-3">
-        <app-search [isFilter]="false" [set_location]="filterParams.location" [placeholder]="'ubicacion'"></app-search>
-        <app-selectcheck [data]="operation" [setValue]="filterParams.operation" (selectedSingle)="filterOperation($event)"></app-selectcheck>
-        <app-selectcheck [data]="type" (selectedMulti)="filterType($event)" [setValue]="filterParams.type"></app-selectcheck>
-        <!-- <app-selectcheck [data]="barrio" (selectedMulti)="filterBarrio($event)"></app-selectcheck> -->
-        <app-form-range [rangeValues]="cost_range" (range)="filterPrice($event)" [labelStr]="'Precio'"></app-form-range>
-        <app-form-range [rangeValues]="area_range" (range)="filterArea($event)" [labelStr]="'Area'"></app-form-range>
-        
-          <app-selectcheck [data]="estrato" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
-          <app-checkboxes [selectedRooms]="filterParams.habitaciones" [title]="'Habitaciones'" (roomChange)="setRoom($event)" ></app-checkboxes>
-          <app-checkboxes [selectedRooms]="filterParams.banos" [title]="'Baños'" (roomChange)="setBath($event)" ></app-checkboxes>
-          <app-checkboxes [selectedRooms]="filterParams.garajes" [title]="'garages'" (roomChange)="setGarage($event)" ></app-checkboxes>
-          <!-- <app-selectcheck [data]="bedroom" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
+<div class="container mx-auto ">
+  <div class="flex flex-col md:flex-row relative justify-center items-center">
+    <!-- Mobile Filter Toggle Button (visible only on small screens) -->
+    <button id="mobile-filter-toggle" class="md:hidden fixed bottom-4 right-4 z-50 bg-blue-600 text-white p-3 rounded-full shadow-lg flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+      </svg>
+    </button>
+
+    <!-- Filter Sidebar -->
+    <aside id="filter-sidebar" class="w-full md:w-80 md:h-screen md:sticky md:top-0 bg-gray-50 shadow-md transition-all duration-300 transform md:transform-none">
+      <div class="p-4 h-full overflow-y-auto">
+        <!-- Header with Toggle Button -->
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-lg font-semibold text-gray-800">Filtros</h2>
+          <button id="close-filter" class="md:hidden text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- View Toggle Button -->
+        <button 
+          (click)="isList = !isList" 
+          type="button" 
+          class="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-3 transition-colors duration-300 mb-6"
+        >
+          <span>{{!isList ? 'Ver como Lista' : 'Ver en Mapa'}}</span>
+          <svg 
+            [ngClass]="{'rotate-180': !isList}" 
+            class="w-4 h-4 ms-2 transition-transform duration-300" 
+            aria-hidden="true" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 14 10"
+          >
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+          </svg>
+        </button>
+
+        <!-- Filter Options -->
+        <div class="space-y-5">
+          <!-- Location Search -->
+          <div class="filter-section">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">Ubicación</h3>
+            <app-search 
+              [isFilter]="false" 
+              [set_location]="filterParams.location" 
+              [placeholder]="'Buscar ubicación'"
+              class="w-full"
+            ></app-search>
+          </div>
+
+          <!-- Operation Type -->
+          <div class="filter-section">
        
+            <app-selectcheck 
+              [data]="operation" 
+              [setValue]="filterParams.operation" 
+              (selectedSingle)="filterOperation($event)"
+              class="w-full"
+            ></app-selectcheck>
+          </div>
+
+          <!-- Property Type -->
+          <div class="filter-section">
+           
+            <app-selectcheck 
+              [data]="type" 
+              (selectedMulti)="filterType($event)" 
+              [setValue]="filterParams.type"
+              class="w-full"
+            ></app-selectcheck>
+          </div>
+
+          <!-- Price Range -->
+          <div class="filter-section">
+           
+            <app-form-range 
+              [rangeValues]="cost_range" 
+              (range)="filterPrice($event)" 
+              [labelStr]="'Precio'"
+              class="w-full"
+            ></app-form-range>
+          </div>
+
+          <!-- Area Range -->
+          <div class="filter-section">
+          
+            <app-form-range 
+              [rangeValues]="area_range" 
+              (range)="filterArea($event)" 
+              [labelStr]="'Area'"
+              class="w-full"
+            ></app-form-range>
+          </div>
+
+          <!-- Estrato -->
+          <div class="filter-section">
         
-          <app-selectcheck [data]="bathroom" (selectedMulti)="filterEstrato($event)"></app-selectcheck>
-          <app-selectcheck [data]="garage" (selectedMulti)="filterEstrato($event)"></app-selectcheck> -->
-        
+            <app-selectcheck 
+              [data]="estrato" 
+              (selectedMulti)="filterEstrato($event)"
+              class="w-full"
+            ></app-selectcheck>
+          </div>
+
+          <!-- Rooms -->
+          <div class="filter-section">
+            <app-checkboxes 
+              [selectedRooms]="filterParams.habitaciones" 
+              [title]="'Habitaciones'" 
+              (roomChange)="setRoom($event)"
+              class="w-full"
+            ></app-checkboxes>
+          </div>
+
+          <!-- Bathrooms -->
+          <div class="filter-section">
+            <app-checkboxes 
+              [selectedRooms]="filterParams.banos" 
+              [title]="'Baños'" 
+              (roomChange)="setBath($event)"
+              class="w-full"
+            ></app-checkboxes>
+          </div>
+
+          <!-- Garages -->
+          <div class="filter-section">
+            <app-checkboxes 
+              [selectedRooms]="filterParams.garajes" 
+              [title]="'Garajes'" 
+              (roomChange)="setGarage($event)"
+              class="w-full"
+            ></app-checkboxes>
+          </div>
+        </div>
+
+        <!-- Reset and Apply Filters Buttons (Mobile) -->
+        <div class="mt-6 flex gap-3 md:hidden">
+          <button 
+            type="button" 
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+          >
+            Limpiar
+          </button>
+          <button 
+            type="button" 
+            class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Aplicar
+          </button>
+        </div>
       </div>
-    </div>
-    @if (isList) {
-      
-      <div class="w-full flex flex-col items-center" >
-        <app-filter-topbar class="w-full" (order)="getOrder($event)"></app-filter-topbar>
-        @if (locals && locals.length > 0) {
-          <div class="grid w-full grid-cols-1 xs:grid-cols-1 gap-6 ms:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 ms-2">
-            <div class="relative" *ngFor="let item of locals">
-              <button class=" bg-white p-1 opacity-80 rounded-sm  h-30 w-30 absolute z-[9999] ms-6 mt-4 right-6" (click)="onMap(item._id)">
-                @if (mapIdSelected == item._id) {
-                  
-                  <svg  width="25px" height="25px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M320 89.6h640v76.8H320V89.6z m0 768h640v76.8H320v-76.8z m-256-768h128v76.8H64V89.6z m256 384h640v76.8H320V473.6z m-256 0h128v76.8H64V473.6z m0 384h128v76.8H64v-76.8z" fill="#000000" /></svg>
-     
-                }@else {
-                  <svg class="" width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.7 15C4.03377 15.6353 3 16.5205 3 17.4997C3 19.4329 7.02944 21 12 21C16.9706 21 21 19.4329 21 17.4997C21 16.5205 19.9662 15.6353 18.3 15M12 9H12.01M18 9C18 13.0637 13.5 15 12 18C10.5 15 6 13.0637 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9ZM13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </aside>
+    
+    <!-- Content Area -->
+    <main class="flex-1 min-h-screen">
+      <section>
+        <app-filter-topbar class="w-full mb-4" (order)="getOrder($event)"></app-filter-topbar>
+        
+      </section>
+      @if (isList) {
+      <div class="w-full flex flex-col items-center p-4"> 
+        <!-- Filter Top Bar -->
+        
+          <!-- Property Grid -->
+          @if (locals && locals.length > 0) {
+            <div class="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              <div class="relative h-full" *ngFor="let item of locals">
+                <!-- Map Toggle Button -->
+                <button 
+                  class="absolute top-4 right-4 z-10 bg-white p-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300" 
+                  (click)="onMap(item._id)"
+                  aria-label="Toggle Map View"
+                >
+                  @if (mapIdSelected == item._id) {
+                    <svg width="20" height="20" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M320 89.6h640v76.8H320V89.6z m0 768h640v76.8H320v-76.8z m-256-768h128v76.8H64V89.6z m256 384h640v76.8H320V473.6z m-256 0h128v76.8H64V473.6z m0 384h128v76.8H64v-76.8z" fill="#000000" />
                     </svg>
-                }   
-           </button>
-           @if (mapIdSelected == item._id) {
-            <div class="">
-              <app-map [localData]="item"></app-map>
+                  } @else {
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.7 15C4.03377 15.6353 3 16.5205 3 17.4997C3 19.4329 7.02944 21 12 21C16.9706 21 21 19.4329 21 17.4997C21 16.5205 19.9662 15.6353 18.3 15M12 9H12.01M18 9C18 13.0637 13.5 15 12 18C10.5 15 6 13.0637 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9ZM13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  }
+                </button>
+                
+                <!-- Card or Map View -->
+                @if (mapIdSelected == item._id) {
+                  <div class="h-full min-h-[300px] rounded-lg overflow-hidden shadow-md">
+                    <app-map [localData]="item"></app-map>
+                  </div>
+                } @else {
+                  <app-card [data]="item"></app-card>
+                }
+              </div>
             </div>
-          }  @else {
-              <app-card  [data]="item"></app-card>
-          }
-            </div>
-            </div>
-            <app-pagination class="mt-5 mb-10" [pageData]="pagination" (pageChange)="gotoPage($event)"></app-pagination>
-          }@else {
+            
+            <!-- Pagination -->
+            <app-pagination class="mt-8 mb-10" [pageData]="pagination" (pageChange)="gotoPage($event)"></app-pagination>
+          } @else {
+            <!-- No Results Message -->
             @if (!loading) {
-              <div class="mt-10">
-                No hay Resultados
+              <div class="py-16 text-center">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 class="mt-2 text-lg font-medium text-gray-900">No hay resultados</h3>
+                <p class="mt-1 text-sm text-gray-500">Intenta modificar los filtros para encontrar propiedades.</p>
               </div>
             }
-            @if(loading){
-              <div class="w-full h-[80vh] flex justify-center align-middle items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200" height="200" style="shape-rendering: auto; display: block; background: rgb(255, 255, 255);" xmlns:xlink="http://www.w3.org/1999/xlink"><g><circle stroke-linecap="round" fill="none" stroke-dasharray="50.26548245743669 50.26548245743669" stroke="#bde9ff" stroke-width="8" r="32" cy="50" cx="50">
-                  <animateTransform values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform>
-                </circle><g></g></g><!-- [ldio] generated by https://loading.io --></svg>
+            
+            <!-- Loading Spinner -->
+            @if(loading) {
+              <div class="w-full h-[60vh] flex justify-center items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="80" height="80" style="shape-rendering: auto; display: block;">
+                  <circle stroke-linecap="round" fill="none" stroke-dasharray="50.26548245743669 50.26548245743669" stroke="#3b82f6" stroke-width="8" r="32" cy="50" cx="50">
+                    <animateTransform values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform>
+                  </circle>
+                </svg>
               </div>
-            }     
+            }
           }
-        </div> 
-      }@else {
+        </div>
+      }
+       @else {
+        <!-- Map View -->
         @if (locals) {
-          <div class="flex flex-col w-full">
-            <app-map [localDataList]="locals" class="w-full"></app-map>
-            <app-pagination class="w-full" [pageData]="pagination" (pageChange)="gotoPage($event)"></app-pagination>
+          <div class="flex flex-col w-full h-full">
+            <div class="flex-1 min-h-[500px]">
+              <app-map [localDataList]="locals" class="w-full h-full"></app-map>
+            </div>
+            <app-pagination class="p-4" [pageData]="pagination" (pageChange)="gotoPage($event)"></app-pagination>
           </div>
         }
       }
-      
+    </main>
   </div>
-
 </div>

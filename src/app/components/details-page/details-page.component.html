@@ -1,237 +1,177 @@
 @if (local) {
-
-  <div #goUp class="container mx-auto md:flex w-full flex-col items-center justify-center py-12 2xl:px-20 md:px-6 px-4">
-  
-    <div class=" md:w-3/4 lg:ml-8 md:ml-6 md:mt-0 mt-6">
-      <div class="flex justify-between">
-        
-        <div class="border-b border-gray-200 pb-6">
-          <p class="text-sm leading-none text-gray-600 dark:text-gray-300 ">{{local.location.barrio}}</p>
-          <h1 class="lg:text-2xl text-xl font-semibold lg:leading-6 leading-7 text-gray-800 dark:text-white mt-2">{{local.title}}  {{local.technicalSheet.m2Built}}</h1>
+<div #goUp class="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 2xl:px-20">
+  <!-- Main Content Grid -->
+  <div class="flex flex-col gap-8 lg:flex-row lg:items-start">
+    <!-- Left Column (70% width) -->
+    <div class="w-full lg:w-2/3">
+      <!-- Header Section -->
+      <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
+        <div class="border-b border-gray-200 pb-4 dark:border-gray-700">
+          <p class="text-sm text-gray-600 dark:text-gray-400">{{local.location.barrio}}</p>
+          <h1 class="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100 lg:text-2xl">
+            {{local.title}} {{local.technicalSheet.m2Built}}
+          </h1>
         </div>
-        <div >
-          <p>
-            Publicacion original de {{local.from}}
-          </p>
-            <a [href]="local.link" target="_blank" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"> Ir
-              <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        <div class="flex flex-col items-end gap-2">
+          <p class="text-right text-sm text-gray-500 dark:text-gray-400">Publicación original de {{local.from}}</p>
+          <a [href]="local.link" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+            Ver original
+            <svg class="ml-1.5 h-4 w-4 rtl:rotate-180" aria-hidden="true" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
             </svg>
-            </a>
+          </a>
         </div>
       </div>
-      <div class="relative flex items-center align-middle mt-3 space-x-4 md:space-x-0">
-      <div class="carousel   ">
-      <drag-scroll
-        class="h-[500px]"
-        #nav
-        [drag-scroll-y-disabled]="true"
-        [scroll-x-wheel-enabled]="true"
-        [scrollbar-hidden]="true"
-      >
-        @for (item of local.images; track $index) {
-        <img drag-scroll-item [src]="item" class="object-contain h-[500px] w-full"/>
-        }
-    </drag-scroll>
-    <div class="absolute z-10 w-full flex justify-between top-1/2 px-2">
-        <button (click)="moveLeft()" class="rounded-full bg-slate-100 opacity-50">
-          <svg
-            fill="#000000"
-            class="w-10 "
-            viewBox="0 0 1024 1024"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M604.7 759.2l61.8-61.8L481.1 512l185.4-185.4-61.8-61.8L357.5 512z"
-            />
+
+      <!-- Image Carousel -->
+      <div class="relative overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+        <drag-scroll 
+          class="h-[300px] sm:h-[400px]"
+          #nav
+          [drag-scroll-y-disabled]="true"
+          [scroll-x-wheel-enabled]="true"
+          [scrollbar-hidden]="true">
+          @for (item of local.images; track $index) {
+            <img drag-scroll-item 
+                 [src]="item" 
+                 class="h-full w-full object-contain" 
+                 alt="Property image {{$index + 1}}" 
+                 loading="lazy">
+          }
+        </drag-scroll>
+
+        <!-- Carousel Controls -->
+        <div class="absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-4">
+          <button 
+            (click)="moveLeft()"
+            class="rounded-full bg-white/80 p-2 shadow-lg backdrop-blur-sm transition hover:bg-white/90 dark:bg-gray-800/80 dark:hover:bg-gray-900/90"
+            aria-label="Previous image">
+            <svg class="h-6 w-6" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+          </button>
+          <button 
+            (click)="moveRight()"
+            class="rounded-full bg-white/80 p-2 shadow-lg backdrop-blur-sm transition hover:bg-white/90 dark:bg-gray-800/80 dark:hover:bg-gray-900/90"
+            aria-label="Next image">
+            <svg class="h-6 w-6" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="mt-6 grid grid-cols-2 gap-4 border-y border-gray-200 py-4 dark:border-gray-700 sm:grid-cols-3">
+        <div class="flex items-center gap-2">
+          <svg class="h-6 w-6 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M7 13h10v-2H7m-4 8V9h2v10h10v2M3 3v2h2V3m4 0v2h2V3m4 0v2h2V3m4 0v2h2V3m0 4v2h2V7M3 7h2v2H3m16 4v2h2v-2M3 11h2v2H3m16 4v2h2v-2M3 15h2v2H3m16 4v2h2v-2M3 19h2v2H3"/>
           </svg>
-        </button>
-        <button (click)="moveRight()" class="rounded-full bg-slate-100 opacity-50">
-          <svg
-            fill="#000000"
-            class="w-10 rounded-full bg-slate-100 "
-            viewBox="0 0 1024 1024"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M419.3 264.8l-61.8 61.8L542.9 512 357.5 697.4l61.8 61.8L666.5 512z"
-            />
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Dormitorios</p>
+            <p class="font-medium">{{local.technicalSheet.bedrooms || 1}}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="h-6 w-6 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M17 14v-3h-2v3h-3v2h3v3h2v-3h3v-2M12 3a4 4 0 014 4c0 1.95-1.4 3.58-3.25 3.93V11h4.27l-1.5 1.5L12 9 7 14l1.39 1.37 1.62-1.62H8v-1.07C6.19 11.72 5 10 5 8a4 4 0 014-4z"/>
           </svg>
-        </button>
-    </div>
-    </div>
-      </div>
-    </div>
-    <div class=" md:w-3/4 lg:ml-8 md:ml-6 md:mt-0 mt-6 ">   
-      <div class="py-4 border-b border-gray-200 flex items-center justify-between">
-        <div class=" flex space-x-3 overflow-hidden rounded-lg px-1 ">
-          <p class="flex items-center font-medium text-gray-800">
-            <svg
-              fill="#000000"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-7"
-            >
-              <path
-                id="secondary"
-                d="M10,5h4a1,1,0,0,1,1,1V22a1,1,0,0,1-1,1H9a0,0,0,0,1,0,0V6a1,1,0,0,1,1-1Z"
-                transform="translate(26 2) rotate(90)"
-                style="fill: rgb(44, 169, 188); stroke-width: 2;"
-              ></path>
-              <path
-                id="primary"
-                d="M7,11H3V7A2,2,0,0,1,5,5H5A2,2,0,0,1,7,7ZM5,17v2m14-2v2m2-3V12a1,1,0,0,0-1-1H3v5a1,1,0,0,0,1,1H20A1,1,0,0,0,21,16Z"
-                style="
-                  fill: none;
-                  stroke: rgb(0, 0, 0);
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                  stroke-width: 2;
-                "
-              ></path>
-            </svg>
-            {{local.technicalSheet.bedrooms || 1}}
-          </p>
-          <p class="flex items-center font-medium text-gray-800">
-            <svg
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-7"
-            >
-              <path
-                id="secondary"
-                d="M19,10H13V9a3,3,0,0,1,3-3h0a3,3,0,0,1,3,3Z"
-                style="fill: rgb(44, 169, 188); stroke-width: 2;"
-              ></path>
-              <path
-                id="primary"
-                d="M16,6V5a2,2,0,0,0-2-2H9A2,2,0,0,0,7,5V21"
-                style="
-                  fill: none;
-                  stroke: rgb(0, 0, 0);
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                  stroke-width: 2;
-                "
-              ></path>
-              <path
-                id="primary-2"
-                data-name="primary"
-                d="M19,10H13V9a3,3,0,0,1,3-3h0a3,3,0,0,1,3,3ZM5,21H9m9-5V14m-4,2V14"
-                style="
-                  fill: none;
-                  stroke: rgb(0, 0, 0);
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                  stroke-width: 2;
-                "
-              ></path>
-            </svg>
-            {{local.technicalSheet.bathrooms}}
-          </p>
-          <p class="flex items-center font-medium text-gray-800">
-            <svg
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-7"
-            >
-              <path
-                id="secondary"
-                d="M17,5H7l4,4V19H21V9.41a1,1,0,0,0-.29-.7Z"
-                style="fill: rgb(44, 169, 188); stroke-width: 2;"
-              ></path>
-              <path
-                id="primary"
-                d="M20.71,8.71a1,1,0,0,1,.29.7V19H11V9L7,5H17ZM11,19V9L7,5,3.29,8.71a1,1,0,0,0-.29.7V19Z"
-                style="
-                  fill: none;
-                  stroke: rgb(0, 0, 0);
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                  stroke-width: 2;
-                "
-              ></path>
-            </svg>
-
-            {{local.technicalSheet.m2Built}}
-          </p>
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Baños</p>
+            <p class="font-medium">{{local.technicalSheet.bathrooms}}</p>
+          </div>
         </div>
-        <div class="flex items-center justify-center">
-          <p class="text-xl font-bold leading-none text-gray-600 dark:text-gray-300">{{local.costs.total_amount | currency: '$ ':'symbol' : '1.0-0'}}</p>
-          
+        <div class="flex items-center gap-2">
+          <svg class="h-6 w-6 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 2l-5.5 9h11L12 2m0 3.84L13.93 9h-3.87L12 5.84M17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5m0 7.5c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3M3 21.5h11v-6H3v6m2-4h7v2H5v-2z"/>
+          </svg>
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Área</p>
+            <p class="font-medium">{{local.technicalSheet.m2Built}} m²</p>
+          </div>
         </div>
       </div>
-      <div class="py-4 border-b border-gray-200 flex items-center justify-between">
-        <p class="text-base leading-4 text-gray-800 dark:text-gray-300">{{local.description}}</p>
-     
+
+      <!-- Price & Description -->
+      <div class="mt-6">
+        <div class="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
+          {{local.costs.total_amount | currency: '$ ':'symbol' : '1.0-0'}}
+        </div>
+        <p class="text-gray-700 dark:text-gray-300">{{local.description}}</p>
       </div>
-      <div class="">
-        <app-map [localData]="local" class="md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6"></app-map>
-  
     </div>
-     
-       <div class="flex justify-between mt-4 w-full pe-3">
-         <p class="text-base leading-4 text-gray-600 dark:text-gray-300">Estrato</p>
-         <p class="text-base leading-4  text-gray-600 dark:text-gray-300">{{local.technicalSheet.stratum}}</p>
-       </div>
-       <div class="flex justify-between mt-4 w-full pe-3">
-         <p class="text-base leading-4 text-gray-600 dark:text-gray-300">garages</p>
-         <p class="text-base leading-4  text-gray-600 dark:text-gray-300">{{local.technicalSheet.garage}}</p>
-       </div>
-<div class="flex justify-between mt-4 w-full pe-3">
-  <p class="text-base leading-4 text-gray-600 dark:text-gray-300">Antiguedad</p>
-  <p class="text-base leading-4  text-gray-600 dark:text-gray-300">{{local.technicalSheet.constructionYear}}</p>
 
+    <!-- Right Column (30% width) -->
+    <div class="w-full lg:w-1/3">
+      <!-- Map Container -->
+      <div class="rounded-lg border border-gray-200 shadow-sm dark:border-gray-700">
+        <app-map [localData]="local" class="h-64 w-full rounded-lg"></app-map>
+      </div>
 
-     </div>
-     <div class="mt-6"></div>
-     <h2 class=" text-xl ">Propiedades cercanas</h2>
-     <div class="relative flex items-center align-middle mt-3 space-x-4 md:space-x-0">
-       @if (suggested) {
-  <drag-scroll
-     class="block"
-     #suggest
-     [drag-scroll-y-disabled]="true"
-     [scroll-x-wheel-enabled]="true"
-     [scrollbar-hidden]="true"
-   >
-    <div class="h-fit">
-     @for (item of suggested; track $index) {
-        <app-card (click)="scroll0()" class=" w-[200px] mx-1" drag-scroll-item [data]="item"></app-card>
-      }
+      <!-- Detailed Specs -->
+      <div class="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+        <h3 class="mb-3 text-lg font-semibold dark:text-gray-200">Características</h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">Estrato</span>
+            <span class="font-medium">{{local.technicalSheet.stratum}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">Parqueaderos</span>
+            <span class="font-medium">{{local.technicalSheet.garage}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-300">Año de construcción</span>
+            <span class="font-medium">{{local.technicalSheet.constructionYear}}</span>
+          </div>
+        </div>
+      </div>
     </div>
-  </drag-scroll>
-  }
- <div class="absolute z-10 w-full flex justify-between top-1/2 px-2">
-  <button (click)="moveLeftS()" class="rounded-full bg-slate-100 opacity-50">
-    <svg
-      fill="#000000"
-      class="w-10 "
-      viewBox="0 0 1024 1024"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M604.7 759.2l61.8-61.8L481.1 512l185.4-185.4-61.8-61.8L357.5 512z"
-      />
-    </svg>
-  </button>
-  <button (click)="moveRightS()" class="rounded-full bg-slate-100 opacity-50">
-    <svg
-      fill="#000000"
-      class="w-10 rounded-full bg-slate-100 "
-      viewBox="0 0 1024 1024"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M419.3 264.8l-61.8 61.8L542.9 512 357.5 697.4l61.8 61.8L666.5 512z"
-      />
-    </svg>
-  </button>
-</div>
-
-    </div>
-    </div>
-   
   </div>
-}
 
+  <!-- Nearby Properties -->
+  <div class="mt-12">
+    <h2 class="mb-6 text-xl font-semibold dark:text-gray-200">Propiedades cercanas</h2>
+    @if (suggested) {
+      <div class="relative">
+        <drag-scroll 
+          class="block h-[350px]"
+          #suggest
+          [drag-scroll-y-disabled]="true"
+          [scroll-x-wheel-enabled]="true"
+          [scrollbar-hidden]="true">
+          <div class="flex gap-4 pb-3">
+            @for (item of suggested; track $index) {
+              <app-card 
+                (click)="scroll0()"
+                class="w-[240px] flex-shrink-0 sm:w-[280px]"
+                drag-scroll-item
+                [data]="item">
+              </app-card>
+            }
+          </div>
+        </drag-scroll>
+
+        <div class="absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-4">
+          <button 
+            (click)="moveLeftS()"
+            class="rounded-full bg-white/80 p-2 shadow-lg backdrop-blur-sm transition hover:bg-white/90 dark:bg-gray-800/80 dark:hover:bg-gray-900/90"
+            aria-label="Previous properties">
+            <svg class="h-6 w-6" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+          </button>
+          <button 
+            (click)="moveRightS()"
+            class="rounded-full bg-white/80 p-2 shadow-lg backdrop-blur-sm transition hover:bg-white/90 dark:bg-gray-800/80 dark:hover:bg-gray-900/90"
+            aria-label="Next properties">
+            <svg class="h-6 w-6" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+}

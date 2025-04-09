@@ -8,7 +8,7 @@ import { SelectCheckComponent } from "../../common/select/select-check";
     selector: 'app-filter-topbar',
     template: `
     
-    <nav class="w-full flex items-center justify-between flex-wrap bg-slate-100 px-6 py-4">
+    <nav class="w-full flex items-center justify-between flex-wrap bg-gray-50 px-6 py-4">
   <div>
   </div>
     <div>
