@@ -4,7 +4,7 @@ import { Filter } from '../models/filter';
 import { NearbyLocations } from '../models/nearbyLocations';
 
 const baseUrl = "https://localizaloc.azurewebsites.net/api"
-const baseUrl1 = "https://localizalocapiai.azurewebsites.net/api"
+const baseUrl1 = "https://localizalocpromp.azurewebsites.net/api"
 
 const headers = { 'Access-Control-Allow-Origin': '*'};
 @Injectable({
