@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Filter } from '../models/filter';
 import { NearbyLocations } from '../models/nearbyLocations';
 
-const baseUrl = "https://localizaloc.azurewebsites.net/api"
-const baseUrl1 = "https://localizalocpromp.azurewebsites.net/api"
+const baseUrl = "https://localizalocv2.azurewebsites.net/api"
+const baseUrl1 = "https://sergip8-ocr-manga-test.hf.space"
 
 const headers = { 'Access-Control-Allow-Origin': '*'};
 @Injectable({
@@ -56,7 +56,7 @@ export class CosmosdbService {
   getPromptResults(prompt: string){
     let params = new HttpParams()
       .set('prompt', prompt.toString());
-    return this.http.get<any>(baseUrl1+ "/promptResolver", {headers:headers, params:params})
+    return this.http.get<any>(baseUrl1+ "/process", {headers:headers, params:params})
   }
 
 }
